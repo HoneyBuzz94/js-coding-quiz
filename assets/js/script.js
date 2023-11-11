@@ -21,6 +21,7 @@ var timeOutBtn = $(".time-out-btn");
 
 // JS global variables
 var questionTime = 10;
+var gameDone = false;
 var questionArray = [
     q1 = {q: "What does 'var' stand for?", answers: ["Variable", "Variance", "Vertical Abstract Reporter", "Varsity"], correct: "Variable"},
     q2 = {q: "What command would you use to log to the console?", answers: ["console.log()", "print()", "logger.Log()", "writeToConsole()"], correct: "console.log()"},
@@ -61,13 +62,16 @@ function startGame(){
     setTime();
 }
 
+// This function sets a timer for the duration of the game
 function setTime() {
     var timerInterval = setInterval(function() {
       questionTime--;
       timeLeft.text(questionTime);
   
-      if(questionTime == 0) {
+      if(questionTime <= 0 || gameDone == true) {
         clearInterval(timerInterval);
+      }
+      if(questionTime <= 0 && gameDone == false) {
         timeOutMsg();
       }
     }, 1000);
@@ -97,6 +101,7 @@ function userAnswer(event){
     if(questionCount < questionArray.length){
         fillQuestion();
     } else {
+        gameDone = true;
         showScore();
     }
 }
@@ -136,6 +141,7 @@ function reset(){
 // Reset global variables
     questionTime = 10;
     timeLeft.text(questionTime);
+    gameDone = false;
     questionCount = 0;
     userCorrect = 0;
     userWrong = 0;
