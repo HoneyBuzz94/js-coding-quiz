@@ -59,6 +59,10 @@ main{
     background-color: cadetblue;
 }
 
+.start-btn:active{
+    box-shadow: inset 0 0 10px black;
+}
+
 .question-card{
     border: solid orange;
     border-radius: 20px;
@@ -109,11 +113,6 @@ main{
 .option-btn:active{
     box-shadow: inset 0 0 10px black;
 }
-
-
-
-
-
 
 footer{
     position: fixed;
