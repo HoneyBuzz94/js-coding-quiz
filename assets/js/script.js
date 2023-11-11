@@ -3,6 +3,8 @@ var highscores = $(".highscores");
 var highscoreList = $(".highscore-list");
 var highscoreUl = $(".highscore-ul");
 var startBtn = $(".start-btn");
+var timer = $(".timer");
+var timeLeft = $(".time-left");
 var questionCard = $(".question-card");
 var question = $(".question");
 var options = $(".options");
@@ -18,6 +20,7 @@ var timeOutCard = $(".time-out-card");
 var timeOutBtn = $(".time-out-btn");
 
 // JS global variables
+var questionTime = 10;
 var questionArray = [
     q1 = {q: "What does 'var' stand for?", answers: ["Variable", "Variance", "Vertical Abstract Reporter", "Varsity"], correct: "Variable"},
     q2 = {q: "What command would you use to log to the console?", answers: ["console.log()", "print()", "logger.Log()", "writeToConsole()"], correct: "console.log()"},
@@ -38,6 +41,7 @@ function init(){
     questionCard.hide();
     scoreCard.hide();
     timeOutCard.hide();
+    timeLeft.text(questionTime);
 }
 init();
 
@@ -54,7 +58,20 @@ function startGame(){
     startBtn.hide();
     fillQuestion();
     questionCard.show();
+    setTime();
 }
+
+function setTime() {
+    var timerInterval = setInterval(function() {
+      questionTime--;
+      timeLeft.text(questionTime);
+  
+      if(questionTime == 0) {
+        clearInterval(timerInterval);
+        timeOutMsg();
+      }
+    }, 1000);
+  }
 
 // This function updates the question card with each subsequent question's data
 function fillQuestion(){
@@ -69,11 +86,13 @@ function fillQuestion(){
 function userAnswer(event){
     if(event.target.textContent == questionArray[questionCount].correct){
         userCorrect++;
-        questionCount++;
+        questionTime+=2;
     } else {
         userWrong++;
-        questionCount++;
+        questionTime-=2;
     }
+    timeLeft.text(questionTime);
+    questionCount++;
 // When there are no more questions left, the function ends the game and displays the score card
     if(questionCount < questionArray.length){
         fillQuestion();
@@ -102,6 +121,11 @@ function logScore(){
     reset();
 }
 
+function timeOutMsg(){
+    questionCard.hide();
+    timeOutCard.show();
+}
+
 // This function resets the game to starting values
 function reset(){
 // Reset to starting state
@@ -110,6 +134,8 @@ function reset(){
     startBtn.show();
 
 // Reset global variables
+    questionTime = 10;
+    timeLeft.text(questionTime);
     questionCount = 0;
     userCorrect = 0;
     userWrong = 0;
