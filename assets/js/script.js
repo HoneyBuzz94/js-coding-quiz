@@ -8,6 +8,7 @@ var option2 = $(".option2");
 var option3 = $(".option3");
 var option4 = $(".option4");
 var scoreCard = $(".score-card");
+var score = $(".score");
 var initialBox = $(".initial-box");
 var submitBtn = $(".submit-btn");
 
@@ -19,6 +20,10 @@ var questionArray = [
     q4 = {q: "Which of the following would you use to rotate an HTML element?", answers: [".transform", ".rotate", ".spin", ".adjust"], correct: ".transform"}
 ];
 var questionCount = 0;
+var userCorrect = 0;
+var userWrong = 0;
+var userScore = "";
+var userInitials = "";
 
 // Initializing function
 function init(){
@@ -47,9 +52,11 @@ function fillQuestion(){
 function userAnswer(event){
     if(event.target.textContent == questionArray[questionCount].correct){
         console.log("Correct!");
+        userCorrect++;
         questionCount++;
     } else {
         console.log("Wrong!");
+        userWrong++;
         questionCount++;
     }
 // When there are no more questions left, the function ends the game and displays the score card
@@ -57,20 +64,37 @@ function userAnswer(event){
         fillQuestion();
     } else {
         showScore();
-        questionCount = 0;
     }
 }
 
 // This function displays the score card
 function showScore(){
+    score.text(userCorrect/(questionArray.length)*100);
+    userScore = (userCorrect/(questionArray.length)*100).toString() + "%";
     questionCard.hide();
     scoreCard.show();
 }
 
 // This function logs the player score and records their data in the high score sheet
 function logScore(){
+// Log player score
+        var date = new Date();
+        var day = date.getUTCDate();
+        var month = date.getUTCMonth() + 1;
+        var year = date.getUTCFullYear();
+        userInitials = initialBox.val().toUpperCase();
+        localStorage.setItem("Highscore: " + date.toString(), userInitials + " " + userScore + " (" + day+"/"+month+"/"+year+")");
+
+// Reset to starting state
         scoreCard.hide();
         startBtn.show();
+
+// Reset global variables
+        questionCount = 0;
+        userCorrect = 0;
+        userWrong = 0;
+        userScore = 0;
+        userInitials = "";
 }
 
 // These are the event listeners for the page
