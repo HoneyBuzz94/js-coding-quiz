@@ -1,4 +1,7 @@
 // HTML elements
+var highscores = $(".highscores");
+var highscoreList = $(".highscore-list");
+var highscoreUl = $(".highscore-ul");
 var startBtn = $(".start-btn");
 var questionCard = $(".question-card");
 var question = $(".question");
@@ -11,6 +14,8 @@ var scoreCard = $(".score-card");
 var score = $(".score");
 var initialBox = $(".initial-box");
 var submitBtn = $(".submit-btn");
+var timeOutCard = $(".time-out-card");
+var timeOutBtn = $(".time-out-btn");
 
 // JS global variables
 var questionArray = [
@@ -25,12 +30,24 @@ var userWrong = 0;
 var userScore = "";
 var userInitials = "";
 
+
+
 // Initializing function
 function init(){
+    highscoreList.hide();
     questionCard.hide();
     scoreCard.hide();
+    timeOutCard.hide();
 }
 init();
+
+function showHighScores(){
+    highscoreList.show();
+}
+
+function hideHighScores(){
+    highscoreList.hide();
+}
 
 // This function initiates all other operations necessary to start the game
 function startGame(){
@@ -51,11 +68,9 @@ function fillQuestion(){
 // This function checks to see if the user answer was correct or wrong
 function userAnswer(event){
     if(event.target.textContent == questionArray[questionCount].correct){
-        console.log("Correct!");
         userCorrect++;
         questionCount++;
     } else {
-        console.log("Wrong!");
         userWrong++;
         questionCount++;
     }
@@ -77,32 +92,42 @@ function showScore(){
 
 // This function logs the player score and records their data in the high score sheet
 function logScore(){
-// Log player score
-        var date = new Date();
-        var day = date.getUTCDate();
-        var month = date.getUTCMonth() + 1;
-        var year = date.getUTCFullYear();
-        userInitials = initialBox.val().toUpperCase();
-        localStorage.setItem("Highscore: " + date.toString(), userInitials + " " + userScore + " (" + day+"/"+month+"/"+year+")");
+    var date = new Date();
+    var day = date.getUTCDate();
+    var month = date.getUTCMonth() + 1;
+    var year = date.getUTCFullYear();
+    userInitials = initialBox.val().toUpperCase();
+    localStorage.setItem("Highscore: " + date.toString(), userInitials + " " + userScore + " (" + day+"/"+month+"/"+year+")");
 
+    reset();
+}
+
+// This function resets the game to starting values
+function reset(){
 // Reset to starting state
-        scoreCard.hide();
-        startBtn.show();
+    scoreCard.hide();
+    timeOutCard.hide();
+    startBtn.show();
 
 // Reset global variables
-        questionCount = 0;
-        userCorrect = 0;
-        userWrong = 0;
-        userScore = 0;
-        userInitials = "";
+    questionCount = 0;
+    userCorrect = 0;
+    userWrong = 0;
+    userScore = 0;
+    userInitials = "";
 }
 
 // These are the event listeners for the page
+highscores.on("mouseenter", showHighScores);
+highscores.on("mouseleave", hideHighScores);
+
 startBtn.on("click", startGame);
 
 options.on("click", ".option-btn", userAnswer);
 
 submitBtn.on("click", logScore);
+
+timeOutBtn.on("click", reset);
 
 
 

@@ -35,6 +35,20 @@ nav li:active{
     box-shadow: inset 0 0 10px black;
 }
 
+.highscore-list{
+    position: absolute;
+    right: 0;
+    border: solid orange;
+    border-radius: 20px;
+    background-color: aliceblue;
+    color: black;
+    width: 20%;
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 0 10px black;
+}
+
 main{
     display: flex;
     flex-direction: column;
@@ -63,7 +77,7 @@ main{
     box-shadow: inset 0 0 10px black;
 }
 
-.score-card, .question-card{
+.time-out-card, .score-card, .question-card{
     border: solid orange;
     border-radius: 20px;
     background-color: rgb(5, 61, 61);
@@ -114,7 +128,7 @@ main{
     box-shadow: inset 0 0 10px black;
 }
 
-.score-card{
+.time-out-card, .score-card{
     align-items: center;
     gap: 15px;
 }
@@ -132,7 +146,7 @@ main{
     border-radius: 5px;
 }
 
-.submit-btn{
+.time-out-btn, .submit-btn{
     width: 45%;
     padding: 10px 0;
     border: none;
@@ -140,13 +154,13 @@ main{
     transition: all 0.2s ease-in-out;
 }
 
-.submit-btn:hover{
+.time-out-btn:hover, .submit-btn:hover{
     cursor: pointer;
     box-shadow: 0 0 10px black;
     background-color: cadetblue;
 }
 
-.submit-btn:active{
+.time-out-btn:active, .submit-btn:active{
     box-shadow: inset 0 0 10px black;
 }
 
