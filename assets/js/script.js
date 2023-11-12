@@ -45,10 +45,10 @@ var savedHighscores = JSON.parse(localStorage.getItem("saved-highscores")) || []
 
 // Initializing function
 function init(){
-    // highscoreList.hide();
-    // questionCard.hide();
-    // scoreCard.hide();
-    // timeOutCard.hide();
+    highscoreList.hide();
+    questionCard.hide();
+    scoreCard.hide();
+    timeOutCard.hide();
     timeLeft.text(questionTime);
     if(savedHighscores.length>0){
         hs1.text(savedHighscores[0].initials+" --- Score: "+savedHighscores[0].score);
