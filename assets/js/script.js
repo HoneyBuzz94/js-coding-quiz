@@ -24,6 +24,7 @@ var timeOutCard = $(".time-out-card");
 var timeOutBtn = $(".time-out-btn");
 
 // JS global variables
+
 var questionTime = 10;
 var gameDone = false;
 var questionArray = [
@@ -58,7 +59,7 @@ function init(){
     if(savedHighscores.length>2){
         hs3.text(savedHighscores[2].initials+" --- Score: "+savedHighscores[2].score);
     }
-    if(savedHighscores,length>3){
+    if(savedHighscores.length>3){
         hs4.text(savedHighscores[3].initials+" --- Score: "+savedHighscores[3].score);
     }
     if(savedHighscores.length>4){
@@ -77,10 +78,25 @@ function hideHighScores(){
 
 // This function initiates all other operations necessary to start the game
 function startGame(){
+    randomizer();
     startBtn.hide();
     fillQuestion();
     questionCard.show();
     setTime();
+}
+
+// This function shuffles the order of questions and answers randomly
+function randomizer(){
+// The shuffler
+    const shuffle = (array) => {
+        return array.sort(() => Math.random() - 0.5);
+    }
+
+// Shuffled the order of questionArray and then the answer arrays in each question
+    questionArray = shuffle(questionArray);;
+    for(i=0;i<questionArray[0].answers.length;i++){
+        questionArray[i].answers = shuffle(questionArray[i].answers); 
+    }
 }
 
 // This function sets a timer for the duration of the game
@@ -140,7 +156,7 @@ function logScore(){
     userInitials = initialBox.val().toUpperCase();
     var score = {
         score: userScore,
-        initials: userInitials 
+        initials: userInitials
     }
     savedHighscores.push(score);
     savedHighscores.sort((a, b) => b.score - a.score);
@@ -155,7 +171,7 @@ function logScore(){
     if(savedHighscores.length>2){
         hs3.text(savedHighscores[2].initials+" --- Score: "+savedHighscores[2].score);
     }
-    if(savedHighscores,length>3){
+    if(savedHighscores.length>3){
         hs4.text(savedHighscores[3].initials+" --- Score: "+savedHighscores[3].score);
     }
     if(savedHighscores.length>4){
@@ -199,24 +215,3 @@ options.on("click", ".option-btn", userAnswer);
 submitBtn.on("click", logScore);
 
 timeOutBtn.on("click", reset);
-
-
-
-
-
-
-/* const shuffle = (array) => { 
-    for (let i = array.length - 1; i > 0; i--) { 
-      const j = Math.floor(Math.random() * (i + 1)); 
-      [array[i], array[j]] = [array[j], array[i]];
-    } 
-    return array; 
-};
-
-var shuffledArray = shuffle(questionArray);
-for(i=0;i<shuffledArray.length;i++){
-    for(j=0;j<shuffledArray[i].answers.length;j++){
-        shuffle(shuffledArray[i].answers[j]);
-    }
-}
-console.log(shuffledArray); */
