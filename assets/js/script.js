@@ -1,7 +1,11 @@
 // HTML elements
-var highscores = $(".highscores");
+var highscoreTXT = $(".highscoreTXT");
 var highscoreList = $(".highscore-list");
-var highscoreUl = $(".highscore-ul");
+var hs1 = $(".hs1");
+var hs2 = $(".hs2");
+var hs3 = $(".hs3");
+var hs4 = $(".hs4");
+var hs5 = $(".hs5");
 var startBtn = $(".start-btn");
 var timer = $(".timer");
 var timeLeft = $(".time-left");
@@ -31,8 +35,10 @@ var questionArray = [
 var questionCount = 0;
 var userCorrect = 0;
 var userWrong = 0;
-var userScore = "";
+var userScore = 0;
 var userInitials = "";
+var savedHighscores = JSON.parse(localStorage.getItem("saved-highscores")) || [];
+
 
 
 
@@ -43,13 +49,28 @@ function init(){
     scoreCard.hide();
     timeOutCard.hide();
     timeLeft.text(questionTime);
+    if(savedHighscores.length>0){
+        hs1.text(savedHighscores[0].initials+" --- Score: "+savedHighscores[0].score);
+    }
+    if(savedHighscores.length>1){
+        hs2.text(savedHighscores[1].initials+" --- Score: "+savedHighscores[1].score);
+    }
+    if(savedHighscores.length>2){
+        hs3.text(savedHighscores[2].initials+" --- Score: "+savedHighscores[2].score);
+    }
+    if(savedHighscores,length>3){
+        hs4.text(savedHighscores[3].initials+" --- Score: "+savedHighscores[3].score);
+    }
+    if(savedHighscores.length>4){
+        hs5.text(savedHighscores[4].initials+" --- Score: "+savedHighscores[4].score);
+    }
 }
 init();
 
+// These functions show and hide the highscore card respectively
 function showHighScores(){
     highscoreList.show();
 }
-
 function hideHighScores(){
     highscoreList.hide();
 }
@@ -77,7 +98,7 @@ function setTime() {
     }, 1000);
   }
 
-// This function updates the question card with each subsequent question's data
+// This function updates the question card with each question's data
 function fillQuestion(){
     question.text(questionArray[questionCount].q);
     option1.text(questionArray[questionCount].answers[0]);
@@ -108,24 +129,42 @@ function userAnswer(event){
 
 // This function displays the score card
 function showScore(){
-    score.text(userCorrect/(questionArray.length)*100);
-    userScore = (userCorrect/(questionArray.length)*100).toString() + "%";
+    userScore = (userCorrect/(questionArray.length)*100);
+    score.text(userScore);
     questionCard.hide();
     scoreCard.show();
 }
 
 // This function logs the player score and records their data in the high score sheet
 function logScore(){
-    var date = new Date();
-    var day = date.getUTCDate();
-    var month = date.getUTCMonth() + 1;
-    var year = date.getUTCFullYear();
     userInitials = initialBox.val().toUpperCase();
-    localStorage.setItem("Highscore: " + date.toString(), userInitials + " " + userScore + " (" + day+"/"+month+"/"+year+")");
-
+    var score = {
+        score: userScore,
+        initials: userInitials 
+    }
+    savedHighscores.push(score);
+    savedHighscores.sort((a, b) => b.score - a.score);
+    savedHighscores.splice(5);
+    localStorage.setItem("saved-highscores", JSON.stringify(savedHighscores));
+    if(savedHighscores.length>0){
+        hs1.text(savedHighscores[0].initials+" --- Score: "+savedHighscores[0].score);
+    }
+    if(savedHighscores.length>1){
+        hs2.text(savedHighscores[1].initials+" --- Score: "+savedHighscores[1].score);
+    }
+    if(savedHighscores.length>2){
+        hs3.text(savedHighscores[2].initials+" --- Score: "+savedHighscores[2].score);
+    }
+    if(savedHighscores,length>3){
+        hs4.text(savedHighscores[3].initials+" --- Score: "+savedHighscores[3].score);
+    }
+    if(savedHighscores.length>4){
+        hs5.text(savedHighscores[4].initials+" --- Score: "+savedHighscores[4].score);
+    }
     reset();
 }
 
+// This function shows the time out message
 function timeOutMsg(){
     questionCard.hide();
     timeOutCard.show();
@@ -150,8 +189,8 @@ function reset(){
 }
 
 // These are the event listeners for the page
-highscores.on("mouseenter", showHighScores);
-highscores.on("mouseleave", hideHighScores);
+highscoreTXT.on("mouseenter", showHighScores);
+highscoreTXT.on("mouseleave", hideHighScores);
 
 startBtn.on("click", startGame);
 

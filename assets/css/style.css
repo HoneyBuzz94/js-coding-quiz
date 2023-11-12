@@ -38,6 +38,7 @@ nav li:active{
 .highscore-list{
     position: absolute;
     right: 0;
+    top: 20%;
     border: solid orange;
     border-radius: 20px;
     background-color: aliceblue;
@@ -47,6 +48,10 @@ nav li:active{
     display: flex;
     flex-direction: column;
     box-shadow: 0 0 10px black;
+}
+
+.highscore-list li{
+    padding-bottom: 15px;
 }
 
 main{
