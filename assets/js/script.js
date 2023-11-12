@@ -24,7 +24,7 @@ var timeOutCard = $(".time-out-card");
 var timeOutBtn = $(".time-out-btn");
 
 // JS global variables
-
+var highscoreVisible = false;
 var questionTime = 10;
 var gameDone = false;
 var questionArray = [
@@ -45,10 +45,10 @@ var savedHighscores = JSON.parse(localStorage.getItem("saved-highscores")) || []
 
 // Initializing function
 function init(){
-    highscoreList.hide();
-    questionCard.hide();
-    scoreCard.hide();
-    timeOutCard.hide();
+    // highscoreList.hide();
+    // questionCard.hide();
+    // scoreCard.hide();
+    // timeOutCard.hide();
     timeLeft.text(questionTime);
     if(savedHighscores.length>0){
         hs1.text(savedHighscores[0].initials+" --- Score: "+savedHighscores[0].score);
@@ -69,11 +69,16 @@ function init(){
 init();
 
 // These functions show and hide the highscore card respectively
-function showHighScores(){
-    highscoreList.show();
-}
-function hideHighScores(){
-    highscoreList.hide();
+function displayHighscore(){
+    if(highscoreVisible == false){
+        highscoreList.show();
+        highscoreVisible = true;
+        console.log(highscoreVisible);
+    } else if (highscoreVisible == true){
+        highscoreList.hide();
+        highscoreVisible = false;
+        console.log(highscoreVisible);
+    }
 }
 
 // This function initiates all other operations necessary to start the game
@@ -205,8 +210,7 @@ function reset(){
 }
 
 // These are the event listeners for the page
-highscoreTXT.on("mouseenter", showHighScores);
-highscoreTXT.on("mouseleave", hideHighScores);
+highscoreTXT.on("click", displayHighscore);
 
 startBtn.on("click", startGame);
 

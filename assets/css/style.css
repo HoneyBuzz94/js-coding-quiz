@@ -16,37 +16,36 @@ header h1{
 }
 
 nav{
+    position: relative;
     text-align: end;
     font-weight: bold;
+    padding: 30px 0px 15px 0px;
 }
 
-nav li{
+nav p{
     border-radius: 5px;
     display: inline;
     padding: 10px 25px;
 }
 
-nav li:hover{
+nav p:hover{
     cursor: pointer;
     background-color: cadetblue;
 }
 
-nav li:active{
+nav p:active{
     box-shadow: inset 0 0 10px black;
 }
 
 .highscore-list{
     position: absolute;
     right: 0;
-    top: 20%;
+    top: 0;
     border: solid orange;
-    border-radius: 20px;
     background-color: aliceblue;
     color: black;
-    width: 20%;
+    width: 15%;
     padding: 15px;
-    display: flex;
-    flex-direction: column;
     box-shadow: 0 0 10px black;
 }
 
@@ -55,6 +54,7 @@ nav li:active{
 }
 
 main{
+    position: relative;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -86,7 +86,7 @@ main{
     border: solid orange;
     border-radius: 20px;
     background-color: rgb(5, 61, 61);
-    width: 30%;
+    width: 50%;
     padding: 15px;
     display: flex;
     flex-direction: column;
@@ -169,7 +169,6 @@ main{
     box-shadow: inset 0 0 10px black;
 }
 
-
 footer{
     position: fixed;
     bottom: 0;
@@ -179,4 +178,34 @@ footer{
     text-align: center;
     font-weight: bold;
     box-shadow: 0 0 20px black;
+    background-color: darkslategray;
+}
+
+@media screen and (max-width: 1024px) {
+    .highscore-list{
+        width: 25%;
+    }
+    .start-btn, .question-card, .score-card, .time-out-card{
+        width: 80%;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    header{
+        text-align: center;
+    }
+    nav{
+        text-align: center;
+    }
+    .highscore-list{
+        width: 100%;
+        height: 100%;
+        position: absolute;
+    }
+    .start-btn, .question-card, .score-card, .time-out-card{
+        width: 90%;
+    }
+    .timer{
+        width: 50%;
+    }
 }
